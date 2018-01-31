@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 
 class ProductItem extends Component {
 
-
+    onDelete = (id) => {
+        if (confirm('Do you want Delete???')){ //eslint-disable-line
+            this.props.onDelete(id);
+        }
+    }
 
     render() {
         var {product, index} = this.props;
