@@ -4,12 +4,12 @@ import {Route, Link} from 'react-router-dom';
 const menus = [
     {
         name: 'Home',
-        to: '',
+        to: '/',
         exact: true
     },
     {
         name: 'Course',
-        to: 'product-list',
+        to: '/product-list',
         exact: false
     }
 ];
