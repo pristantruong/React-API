@@ -12,17 +12,17 @@ const routes = [
     },
     {
         path: '/product-list',
-        exact: false,
+        exact: true,
         main: () => <ProductListPage />
     },
     {
         path: '/product/add',
-        exact: false,
+        exact: true,
         main: () => <ProductActionPage />
     },
     {
         path: '/product/:id/edit',
-        exact: false,
+        exact: true,
         main: ({match}) => <ProductActionPage match={match}/>
     },
     {
