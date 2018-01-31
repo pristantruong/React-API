@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import callApi from './../../utils/apiCaller';
+import {Link} from 'react-router-dom';
 
 class ProductActionPage extends Component {
 
@@ -25,13 +26,14 @@ class ProductActionPage extends Component {
     onSave = (e) => {
         e.preventDefault();
         var {txtName, txtPrice, chkbStatus} = this.state;
+        var {history} = this.props;
         callApi('products', 'POST', {
             name: txtName,
             price: txtPrice,
             status: chkbStatus,
         }).then(res => {
-            console.log(res);
-            
+            history.goBack(); //về trang trước đó
+            // history.push('/'); //về trang tự mình muốn
         })
     }
 
@@ -75,7 +77,11 @@ class ProductActionPage extends Component {
                             Active
                         </label>
                     </div>
+                    <Link to="/product-list" className="btn btn-danger mr-10">
+                        Back
+                    </Link>
                     <button type="submit" className="btn btn-primary">Save</button>
+                   
                 </form>
 
             </div>

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
 class ProductItem extends Component {
+
+
+
     render() {
         var {product, index} = this.props;
         var statusName = product.status ? 'Active' : 'Invisible';
@@ -16,7 +19,12 @@ class ProductItem extends Component {
                 </td>
                 <td>
                     <button type="button" className="btn btn-info mr-10 btn-xs">Edit</button>
-                    <button type="button" className="btn btn-danger btn-xs">Delete</button>
+                    <button 
+                        type="button" 
+                        className="btn btn-danger btn-xs"
+                        onClick={() => this.onDelete(product.id)}
+                    >Delete
+                    </button>
                 </td>
             </tr>
         );
