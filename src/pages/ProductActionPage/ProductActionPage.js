@@ -67,23 +67,8 @@ class ProductActionPage extends Component {
         };
         if (id) {
             //http://localhost:3000/products/:id => HTTP Method : PUT
-            // callApi(`products/${id}`, 'PUT', { //do dùng redux
-            //     name: txtName,
-            //     price: txtPrice,
-            //     status: chkbStatus,
-            // }).then(res => {
-            //     history.goBack();
-            // })
             this.props.onUpdateProduct(product);
         } else {
-            // callApi('products', 'POST', { //do dùng redux
-            //     name: txtName,
-            //     price: txtPrice,
-            //     status: chkbStatus,
-            // }).then(res => {
-            //     history.goBack(); //về trang trước đó
-            //     // history.push('/'); //về trang tự mình muốn
-            // })
             this.props.onAddProduct(product);
         }
         history.goBack();
