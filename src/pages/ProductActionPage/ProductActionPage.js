@@ -101,7 +101,7 @@ class ProductActionPage extends Component {
                                 type="checkbox"
                                 name="chkbStatus"
                                 value={chkbStatus}
-                                onChange={this.onChange}
+                                onChange={this.onChange} 
                                 checked={chkbStatus}
                             />
                             Active
