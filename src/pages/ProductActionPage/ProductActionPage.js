@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import callApi from './../../utils/apiCaller';
 import { Link } from 'react-router-dom';
+import {actAddProductRequest} from './../../actions/index';
+import {connect} from 'react-redux';
 
 class ProductActionPage extends Component {
 
@@ -44,6 +46,12 @@ class ProductActionPage extends Component {
         e.preventDefault();
         var { id, txtName, txtPrice, chkbStatus } = this.state;
         var { history } = this.props;
+        var product = {
+            id : id,
+            name: txtName,
+            price: txtPrice,
+            status: chkbStatus,
+        };
         if (id) {
             //http://localhost:3000/products/:id => HTTP Method : PUT
             callApi(`products/${id}`, 'PUT', {
@@ -54,16 +62,17 @@ class ProductActionPage extends Component {
                 history.goBack();
             })
         } else {
-            callApi('products', 'POST', {
-                name: txtName,
-                price: txtPrice,
-                status: chkbStatus,
-            }).then(res => {
-                history.goBack(); //về trang trước đó
-                // history.push('/'); //về trang tự mình muốn
-            })
+            // callApi('products', 'POST', { //do dùng redux
+            //     name: txtName,
+            //     price: txtPrice,
+            //     status: chkbStatus,
+            // }).then(res => {
+            //     history.goBack(); //về trang trước đó
+            //     // history.push('/'); //về trang tự mình muốn
+            // })
+            this.props.onAddProduct(product);
+            history.goBack();
         }
-
     }
 
     render() {
@@ -119,4 +128,12 @@ class ProductActionPage extends Component {
     }
 }
 
-export default ProductActionPage;
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onAddProduct: (product) => {
+            dispatch(actAddProductRequest(product));
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(ProductActionPage);
