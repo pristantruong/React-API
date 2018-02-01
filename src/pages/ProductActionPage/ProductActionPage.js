@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import callApi from './../../utils/apiCaller';
 import { Link } from 'react-router-dom';
-import {actAddProductRequest, actGetProductResquest} from './../../actions/index';
+import {actAddProductRequest, actGetProductResquest, actUpdateProductRequest} from './../../actions/index';
 import {connect} from 'react-redux';
 
 class ProductActionPage extends Component {
@@ -33,6 +32,19 @@ class ProductActionPage extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps && nextProps.itemEditing){
+            var {itemEditing} = nextProps;
+            this.setState({
+                id: itemEditing.id,
+                txtName: itemEditing.name,
+                txtPrice: itemEditing.price,
+                chkbStatus: itemEditing.status,
+            })
+        }
+    }
+    
+
 
     onChange = (e) => {
         var target = e.target;
@@ -55,13 +67,14 @@ class ProductActionPage extends Component {
         };
         if (id) {
             //http://localhost:3000/products/:id => HTTP Method : PUT
-            callApi(`products/${id}`, 'PUT', {
-                name: txtName,
-                price: txtPrice,
-                status: chkbStatus,
-            }).then(res => {
-                history.goBack();
-            })
+            // callApi(`products/${id}`, 'PUT', { //do dùng redux
+            //     name: txtName,
+            //     price: txtPrice,
+            //     status: chkbStatus,
+            // }).then(res => {
+            //     history.goBack();
+            // })
+            this.props.onUpdateProduct(product);
         } else {
             // callApi('products', 'POST', { //do dùng redux
             //     name: txtName,
@@ -72,8 +85,8 @@ class ProductActionPage extends Component {
             //     // history.push('/'); //về trang tự mình muốn
             // })
             this.props.onAddProduct(product);
-            history.goBack();
         }
+        history.goBack();
     }
 
     render() {
@@ -129,6 +142,12 @@ class ProductActionPage extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        itemEditing : state.itemEditing
+    }
+}
+
 const mapDispatchToProps = (dispatch, props) => {
     return {
         onAddProduct: (product) => {
@@ -136,8 +155,11 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         onEditProduct: (id) => {
             dispatch(actGetProductResquest(id));
+        },
+        onUpdateProduct: (product) => {
+            dispatch(actUpdateProductRequest(product));
         }
     }
 }
 
-export default connect(null, mapDispatchToProps)(ProductActionPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductActionPage);
